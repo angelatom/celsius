@@ -22,9 +22,9 @@ def setup():
             userID INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE
         );
         CREATE TABLE IF NOT EXISTS buddy(
-            user INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
+            userID INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
             buddyUser INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
-            CONSTRAINT unq_user_buddyUser UNIQUE(user, buddyUser)
+            CONSTRAINT unq_user_buddyUser UNIQUE(userID, buddyUser)
         );
         CREATE TABLE IF NOT EXISTS buddyRequests(
             senderID INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
@@ -37,7 +37,7 @@ def setup():
         );
         CREATE TABLE IF NOT EXISTS messages(
             messageID SERIAL PRIMARY KEY,
-            channelID INTEGER REFERENCES channel(channelID) ON DELETE CASCADE,
+            channelID INTEGER REFERENCES channels(channelID) ON DELETE CASCADE,
             author INTEGER REFERENCES userInfo(userID) ON DELETE SET NULL,
             content VARCHAR(2000) NOT NULL,
             timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW()

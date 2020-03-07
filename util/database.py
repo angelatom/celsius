@@ -74,12 +74,12 @@ def acceptReq(senderID, receiverID):
     cursor.execute("DELETE FROM buddyRequests WHERE senderID = %s AND receiverID = %s", (senderID, receiverID,))
     if cursor.rowcount != 1:
         return False
-    cursor.execute("INSERT INTO buddy (user, buddyUser) VALUES (%s, %s), (%s, %s)", (senderID, receiverID, receiverID, senderID))
+    cursor.execute("INSERT INTO buddy (userID, buddyUser) VALUES (%s, %s), (%s, %s)", (senderID, receiverID, receiverID, senderID))
     cursor.commit()
     return True
 
 def getBuddies(userID):
-    cursor.execute("SELECT user FROM buddy WHERE user = %s", (userID,))
+    cursor.execute("SELECT buddyUser FROM buddy WHERE userID = %s", (userID,))
     return cursor.fetchall()
 
 def getMessages(channelID, offset = 0):
@@ -109,7 +109,7 @@ def matchTags(userID):
     tags = cursor.execute("SELECT tags FROM tags WHERE userID = %s", (userID,))
     cursor.execute(
         '''
-        WITH buddiedIDs AS (SELECT buddyUser FROM buddy WHERE user = %s)
+        WITH buddiedIDs AS (SELECT buddyUser FROM buddy WHERE userID = %s)
         SELECT userID FROM tags
         WHERE
             userID NOT IN (buddiedIDs) AND
