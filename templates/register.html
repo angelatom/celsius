@@ -16,7 +16,7 @@
   <center>
   <h4>Register</h4>
   </center>
-<div>
+</div>
   <form class = "col s12" method="POST" action="/register">
     <div class = "row">
       <div class="input-field col s6 offset-s3">
@@ -39,8 +39,12 @@
         <label for="check_password">Retype Password</label>
         <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
       </div>
+      <div class = "col s6 offset-s3">
+        <div class="chips chips-placeholder">
+          <input class= "input" placeholder= "Enter"> </input>
+        </div>
+      </div>
     </div>
-    <div class="chips"></div>
     <button class="btn waves-effect waves-light" type = "submit" name = "register"> Register </button>
     <a role="button" class="btn btn-light" href="/">Back</a>
   </form>
