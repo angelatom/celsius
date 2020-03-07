@@ -73,13 +73,13 @@ def acceptReq(senderID, receiverID):
     cursor.execute("DELETE FROM buddyRequests WHERE senderID = %s AND receiverID = %s", (senderID, receiverID,))
     if cursor.rowcount != 1:
         return False
-    cursor.execute("INSERT INTO buddy (user, buddyUser) VALUES (%s, %s)", (senderID, receiverID))
+    cursor.execute("INSERT INTO buddy (user, buddyUser) VALUES (%s, %s), (%s, %s)", (senderID, receiverID, receiverID, senderID))
     cursor.commit()
     return True
 
 def getBuddies(userID):
-    cursor.execute("SELECT * FROM buddy WHERE user = %s OR buddyUser = %s", (userID, userID,))
-    return [x[0] if x[0] != userID else x[1] for x in cursor.fetchall()]
+    cursor.execute("SELECT user FROM buddy WHERE user = %s", (userID,))
+    return cursor.fetchall()
 
 def getMessages(channelID, offset = 0):
     cursor.execute(
@@ -103,6 +103,21 @@ def authenticate(username, password):
     if cursor.rowcount == 0:
         return None
     return cursor.fetchone()[0]
+
+def matchTags(userID):
+    tags = cursor.execute("SELECT tags FROM tags WHERE userID = %s", (userID,))
+    cursor.execute(
+        '''
+        WITH buddiedIDs AS (SELECT buddyUser FROM buddy WHERE user = %s)
+        SELECT userID FROM tags
+        WHERE
+            userID NOT IN (buddiedIDs) AND
+            tags && %s
+        LIMIT 5
+        ''',
+        (userID, tags,)
+    )
+    return cursor.fetchall()
 
 @atexit.register
 def saveandexit():
