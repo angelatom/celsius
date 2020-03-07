@@ -23,10 +23,16 @@ def setup():
         );
         CREATE TABLE IF NOT EXISTS buddy(
             user INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
-            buddyuser INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE
+            buddyUser INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
+            CONSTRAINT unq_user_buddyUser UNIQUE(user, buddyUser)
+        );
+        CREATE TABLE IF NOT EXISTS buddyRequests(
+            senderID INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
+            receiverID INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
+            CONSTRAINT unq_senderID_receiverID UNIQUE(senderID, receiverID)
         );
         CREATE TABLE IF NOT EXISTS tags(
-            userID INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
+            userID INTEGER UNIQUE REFERENCES userInfo(userID) ON DELETE CASCADE,
             tags VARCHAR(32) ARRAY
         );
         CREATE TABLE IF NOT EXISTS messages(
