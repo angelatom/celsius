@@ -16,21 +16,21 @@
   <h4>Login</h4>
   </center>
 <div>
-  <form class = "col s12" method="POST" action="/auth">
+  <form class = "col s12" method="POST" action="/login">
     <div class = "row">
       <div class="input-field col s6 offset-s3">
-        <input id="usr_name" type="text" class="validate" data-length="32">
-        <label for="usr_name">Username</label>
+        <input id="username" type="text" class="validate" data-length="32" name="username">
+        <label for="username">Username</label>
         <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
       </div>
       <div class="input-field col s6 offset-s3">
-        <input id="password" type="password" class="validate" data-length="32">
+        <input id="password" type="password" class="validate" data-length="32" name="password">
         <label for="password">Password</label>
         <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
       </div>
     </div>
+    <button class="btn waves-effect waves-light" type = "submit" name = "register"> Login </button>
+    <a role="button" class="btn btn-light" href="/">Back</a>
   </form>
-  <button class="btn waves-effect waves-light" type = "submit" name = "register"> Login </button>
-  <a role="button" class="btn btn-light" href="/">Back</a>
 </div>
 {% endblock %}
