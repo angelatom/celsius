@@ -27,6 +27,7 @@ def setup():
             tags VARCHAR(32) ARRAY
         );
         CREATE TABLE IF NOT EXISTS messages(
+            messageID SERIAL PRIMARY KEY,
             channelID INTEGER REFERENCES channel(channelID) ON DELETE CASCADE,
             author INTEGER REFERENCES userInfo(userID) ON DELETE SET NULL,
             content VARCHAR(2000) NOT NULL,

@@ -17,6 +17,9 @@ def changeDisplayName(userID, newName):
 def changePassword(userID, newPassword):
     cursor.execute("UPDATE userInfo SET password = %s WHERE userID = %s", (newPassword, userID,))
 
+def sendMessage(channelID, authorID, content):
+    cursor.execute("INSERT INTO messages (channelID, author, content) VALUES (%s, %s, %s)", (channelID, authorID, content,))
+
 @atexit.register
 def saveandexit():
     conn.commit()
