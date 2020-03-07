@@ -10,7 +10,8 @@ def setup():
         '''
         CREATE TABLE IF NOT EXISTS userInfo(
             userID SERIAL PRIMARY KEY,
-            username VARCHAR(32),
+            displayName VARCHAR(32),
+            username VARCHAR(32) UNIQUE,
             password VARCHAR(32)
         );
         CREATE TABLE IF NOT EXISTS channel(
