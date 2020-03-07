@@ -9,13 +9,12 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def root():
-    return render_template("base.html")
-    # return "Hello world!"
+    return render_template("home.html")
 
 @app.route("/login", methods = ['POST', 'GET'])
 def login():
     if 'userID' in session:
-        return redirect(url_for("home"))
+        return redirect('/dashboard')
     if request.method == 'GET':
         return render_template("login.html")
     else:
@@ -25,13 +24,13 @@ def login():
         userID = database.authenticate(request.form['username'], request.form['password'])
         if userID != None:
             session['userID'] = userID
-            return redirect(url_for('home'))
+            return redirect('/dashboard')
         else:
             flash('Invalid username or password.')
             return render_template("login.html")
 
 @app.route("/register", methods = ['POST', 'GET'])
-def reg():
+def register():
     if 'userID' in session:
         return redirect(url_for("home"))
     if request.method == 'GET':
@@ -42,13 +41,19 @@ def reg():
                 flash('One or more fields have not been completed.')
                 return redirect('/register')
         if database.registerUser(request.form['displayname'], request.form['username'], request.form['password']):
-            return redirect(url_for('home'))
+            return redirect('/dashboard')
         else:
             flash('Username already exists!')
             return redirect('/register')
 
-@app.route('/test')
-def test():
+@app.route('/logout')
+def logout():
+    if 'userID' in session:
+        session.pop('userID')
+    return redirect('/')
+
+@app.route('/dashboard')
+def dashboard():
     return render_template('dashboard.html')
 
 if __name__ == '__main__':
