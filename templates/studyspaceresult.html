@@ -3,5 +3,17 @@
     
 {%endblock%}
 {% block content %}
-    {{studyspot}}    
+    <ul>
+    {% for each in studyspot %}  
+        <li>{{each['space_title']}}</li>
+        <li>{{each['capacity']}}</li>
+        <li>{{each['reservable']}}</li>
+        <li>{{each['zone']}}</li>
+        <li>{{each['room_number']}}</li>
+        <li>{{each['status']}}</li>
+        <li>{{each['floor']}}</li>
+        <li>{{each['location']}}</li>
+        <li>{{each['zone_description']}}</li>
+    {% endfor %}  
+    </ul>
 {% endblock %}
