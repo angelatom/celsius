@@ -1,6 +1,7 @@
 import os
 from flask_socketio import SocketIO, join_room, leave_room, emit, send
 from flask import Flask, render_template, request, session, url_for, redirect, flash
+from util import database
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -11,17 +12,40 @@ def root():
     return render_template("base.html")
     # return "Hello world!"
 
-@app.route("/login")
+@app.route("/login", methods = ['POST', 'GET'])
 def login():
-    if 'username' in session:
+    if 'userID' in session:
         return redirect(url_for("home"))
-    return render_template("login.html")
+    if request.method == 'GET':
+        return render_template("login.html")
+    else:
+        if 'username' not in request.form or 'password' not in request.form:
+            flash('Please supply both a username and a password.')
+            return render_template('login.html')
+        userID = database.authenticate(request.form['username'], request.form['password'])
+        if userID != None:
+            session['userID'] = userID
+            return redirect(url_for('home'))
+        else:
+            flash('Invalid username or password.')
+            return render_template("login.html")
 
-@app.route("/register")
+@app.route("/register", methods = ['POST', 'GET'])
 def reg():
-    if 'username' in session:
+    if 'userID' in session:
         return redirect(url_for("home"))
-    return render_template("register.html")
+    if request.method == 'GET':
+        return render_template("register.html")
+    else:
+        for i in ['username', 'password', 'displayname']:
+            if i not in request.form:
+                flash('One or more fields have not been completed.')
+                return redirect('/register')
+        if database.registerUser(request.form['displayname'], request.form['username'], request.form['password']):
+            return redirect(url_for('home'))
+        else:
+            flash('Username already exists!')
+            return redirect('/register')
 
 if __name__ == '__main__':
     app.debug = True

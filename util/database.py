@@ -11,6 +11,7 @@ def registerUser(displayName, username, password):
         return False
     cursor.execute("INSERT INTO userInfo (displayName, username, password) VALUES (%s, %s, %s)", (displayName, username, password,))
     conn.commit()
+    return True
 
 def changeDisplayName(userID, newName):
     cursor.execute("UPDATE userInfo SET displayName = %s WHERE userID = %s", (newName, userID,))
