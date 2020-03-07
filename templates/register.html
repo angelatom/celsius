@@ -40,12 +40,14 @@
         <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
       </div>
     </div>
-    <div class="chips chips-initial input-field">
-      <input class="custom-class" id= "skills">
-    </div>
+    <div class="chips"></div>
     <button class="btn waves-effect waves-light" type = "submit" name = "register"> Register </button>
     <a role="button" class="btn btn-light" href="/">Back</a>
   </form>
 </div>
 
+{% endblock %}
+
+{% block footer %}
+<script src="static/register.js"></script>
 {% endblock %}

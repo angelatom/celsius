@@ -32,7 +32,7 @@ def login():
 @app.route("/register", methods = ['POST', 'GET'])
 def register():
     if 'userID' in session:
-        return redirect(url_for("home"))
+        return redirect('/')
     if request.method == 'GET':
         return render_template("register.html")
     else:
@@ -45,6 +45,13 @@ def register():
         else:
             flash('Username already exists!')
             return redirect('/register')
+
+@app.route('/settings')
+def settings():
+    # if 'userID' not in session:
+    #     return redirect('/')
+    # else:
+        return render_template('settings.html')
 
 @app.route('/logout')
 def logout():
