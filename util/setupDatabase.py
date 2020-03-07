@@ -14,12 +14,15 @@ def setup():
             username VARCHAR(32) UNIQUE,
             password VARCHAR(32)
         );
-        CREATE TABLE IF NOT EXISTS channel(
-            channelID SERIAL PRIMARY KEY,
-            participants INTEGER ARRAY
+        CREATE TABLE IF NOT EXISTS channels(
+            channelID SERIAL PRIMARY KEY
+        );
+        CREATE TABLE IF NOT EXISTS channelParticipants(
+            channelID INTEGER REFERENCES channels(channelID) ON DELETE CASCADE,
+            userID INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE
         );
         CREATE TABLE IF NOT EXISTS buddy(
-            username INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
+            user INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE,
             buddyuser INTEGER REFERENCES userInfo(userID) ON DELETE CASCADE
         );
         CREATE TABLE IF NOT EXISTS tags(
