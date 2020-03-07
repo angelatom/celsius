@@ -47,6 +47,10 @@ def reg():
             flash('Username already exists!')
             return redirect('/register')
 
+@app.route('/test')
+def test():
+    return render_template('dashboard.html')
+
 if __name__ == '__main__':
     app.debug = True
     socketio.run(app)
