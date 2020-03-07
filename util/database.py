@@ -112,10 +112,11 @@ def matchTags(userID):
         SELECT userID FROM tags
         WHERE
             userID NOT IN (buddiedIDs) AND
+            userID != %s AND
             tags && %s
         LIMIT 5
         ''',
-        (userID, tags,)
+        (userID, userID, tags,)
     )
     return cursor.fetchall()
 
