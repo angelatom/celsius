@@ -8,7 +8,20 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def root():
-    return "Hello world!"
+    return render_template("base.html")
+    # return "Hello world!"
+
+@app.route("/login")
+def login():
+    if 'username' in session:
+        return redirect(url_for("home"))
+    return render_template("login.html")
+
+@app.route("/register")
+def reg():
+    if 'username' in session:
+        return redirect(url_for("home"))
+    return render_template("register.html")
 
 if __name__ == '__main__':
     app.debug = True
