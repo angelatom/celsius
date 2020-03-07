@@ -1,0 +1,27 @@
+{% extends "dashboard.html" %}
+{%block title%}
+    
+{%endblock%}
+{% block content %}
+    <div class="container">
+		<div class="row">
+            <center><h3> Find Rooms at the NYU Library</h3></center>
+            <br/>
+             <form class = "col s12" method="POST" action="/findstudyspace">
+             <input name="floor" id="floor" type="text">
+             <label for="floor">Floor Number (optional)</label>
+             <input name="location" id="location" type="text">
+            <label for="location">Location (optional)</label>
+            <input name="space" id="space" type="text">
+            <label for="space">Name of the Space (optional)</label>
+            <input name="status" id="status" type="text">
+            <label for="status">Status (optional)</label>
+            <input name="reservable" id="reservable" type="text">
+            <label for="reservable">Reservable (optional)</label>
+            <input name="zone" id="zone" type="text">
+            <label for="zone">Zone Description (optional)</label> <br/>
+            <button type="submit"><i class="material-icons">search</i></button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

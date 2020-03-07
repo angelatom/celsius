@@ -1,7 +1,7 @@
 import os
 from flask_socketio import SocketIO, join_room, leave_room, emit, send
 from flask import Flask, render_template, request, session, url_for, redirect, flash
-from util import database
+from util import database, libraryspaces
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -62,6 +62,38 @@ def logout():
 @app.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html')
+
+@app.route('/test')
+def test():
+    return render_template('studyspace.html')
+
+
+@app.route('/findstudyspace', methods=['POST', 'GET'])
+def findstudyspace():
+    floor = None
+    location = None
+    space = None 
+    status = None
+    reservable = None 
+    zone = None
+    if request.method == "POST":
+        if 'floor' in request.form and request.form['floor'] != '':
+            floor = request.form['floor']
+            print(floor)
+        if 'location' in request.form and request.form['location'] != '':
+            location = request.form['location']
+        if 'space' in request.form and request.form['space'] != '':
+            space = request.form['space']  
+        if 'status' in request.form and request.form['status'] != '':
+            status = request.form['status'] 
+        if 'reservable' in request.form and request.form['reservable'] != '':
+            reservable = request.form['reservable'] 
+        if 'zone' in request.form and request.form['zone'] != '':
+            zone = request.form['zone']    
+    print(request.form)
+    data = libraryspaces.querySpaceInfo(floor = floor, location = location, space_title = space, status = status, reservable = reservable, zone_description=zone)
+    studyspots = libraryspaces.getstudyspots(data)
+    return render_template('studyspaceresult.html', studyspot = studyspots)
 
 if __name__ == '__main__':
     app.debug = True

@@ -7,7 +7,7 @@ url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
 def getSpaceInfo():
     url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
     headers = {'Authorization': 'Bearer 1933d3de-38d8-35ba-8880-f77c65b95b1b'}
-    parameters = {'location': 'West', 'floor': 9}
+    parameters = {}
     req = requests.get(url, headers=headers, params=parameters)
     data = json.loads(req.text)
     return data
@@ -76,3 +76,9 @@ def getlocation(studyspot):
 
 def getzone_description(studyspot):
     return studyspot['zone_description']
+
+
+
+
+
+    
