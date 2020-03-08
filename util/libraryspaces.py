@@ -1,12 +1,12 @@
 import json
 import requests
 
-key = "1933d3de-38d8-35ba-8880-f77c65b95b1b"
+key = "52779c68-ff67-3f1f-b86c-941f33a74370"
 url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
 '''
 def getSpaceInfo():
     url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
-    headers = {'Authorization': 'Bearer 52779c68-ff67-3f1f-b86c-941f33a74370'}
+    headers = {'Authorization': f'Bearer {key}'}
     parameters = {}
     req = requests.get(url, headers=headers, params=parameters)
     data = json.loads(req.text)
@@ -16,7 +16,7 @@ print(getSpaceInfo())
 '''
 def querySpaceInfo(floor = None, location = None, space_title = None, status = None, reservable = None, zone_description= None):
     url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
-    headers = {'Authorization': 'Bearer 52779c68-ff67-3f1f-b86c-941f33a74370'}
+    headers = {'Authorization': f'Bearer {key}'}
     parameters = {}
     if (floor != None):
         parameters['floor'] = floor
@@ -81,4 +81,3 @@ def getzone_description(studyspot):
 
 
 
-    
