@@ -101,7 +101,11 @@ def find_buddy_results():
     tags = []
     for userID in results:
         tags.append(database.getTags(userID[0]))
-    return render_template('buddyresults.html', results = results, userdata = userdata, tags = tags)
+    buddyresults = []
+    for counter in range(len(results)):
+        adder = [userdata[counter], tags[counter]]
+        buddyresults.append(adder)
+    return render_template('buddyresults.html', results = buddyresults)
 
 @app.route('/findstudyspace', methods=['POST', 'GET'])
 def findstudyspace():
