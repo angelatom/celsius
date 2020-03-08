@@ -1,0 +1,12 @@
+{% extends "dashboard.html" %}
+
+{% block body %}
+
+<ul class="collection with-header">
+        <li class="collection-header"><h4> Study Groups </h4></li>
+        {% for each in  %}
+          <a href="#!" class="collection-item"> {{each}} </a>
+        {% endfor %}
+</ul>
+
+{% endblock %}
