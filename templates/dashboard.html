@@ -54,34 +54,34 @@
 									<div class="card-action"></div>
 								</div>
 
-								<div class="card-tabs">
-									<ul class="tabs tabs-fixed-width">
-										<li class="tab"><a href="#main">Test 1</a></li>
-										<li class="tab"><a href="#op1">Current Buddies</a></li>
-										<li class="tab"><a href="#op2">Invites</a></li>
-										<li class="tab col s4"><a href="#op3">Pending Invites</a></li>
-									</ul>
-								</div>
+                  <div class="card-tabs">
+                    <ul class="tabs tabs-fixed-width">
+                      <li class="tab"><a href="#main">User Info</a></li>
+                      <li class="tab"><a href="#op1">Current Buddies</a></li>
+                      <li class="tab"><a href="#op2">Invites</a></li>
+                      <li class="tab col s4"><a href="#op3">Pending Invites</a></li>
+                    </ul>
+                  </div>
 
-								<div class="card-content grey lighten-4">
-									<div id="main" class="row">
-										<div class="col left">
-											<h4>User Information:</h4>
-											<div class="col s8 offset-s2">
-												<h5> Username: {{user}} </h5>
-											</div>
-											<div class="col left">
-												<h4>Current Tags:</h4>
-											</div>
-											<div class="col s8 offset-s2">
-												{%for each in tags%}
-												<div class="chip">
-													{{each}}
-												</div>
-												{% endfor %}
-											</div>
-										</div>
-									</div>
+                  <div class="card-content grey lighten-4">
+                    <div id="main" class = "row">
+                      <div class = "col left">
+                        <h4>User Information:</h4>
+                      <div class = "col s8 offset-s2">
+                        <h5> Username: <strong>{{user}}</strong> </h5>
+                      </div>
+                      <div class = "col left">
+                        <h4>Current Tags:</h4>
+                      </div>
+                      <div class = "col s8 offset-s2">
+        								{%for each in tags%}
+                        <div class="chip">
+                            {{each}}
+                        </div>
+        								{% endfor %}
+                      </div>
+                    </div>
+                  </div>
 
 									<div id="op1">
 										<div class="row">

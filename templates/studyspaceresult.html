@@ -18,7 +18,10 @@
         {% if each['zone'] == "Green" %}
         <span class="new badge green darken-3" data-badge-caption=""> Collaborative Study </span>
         {% else %}
-        <span class="new badge light-blue darken-2" data-badge-caption=""> {{each['zone_description']}} </span>
+          {% if each['zone'] == "Blue" %}
+            <span class="new badge light-blue darken-2" data-badge-caption=""> {{each['zone_description']}} </span>
+          {% else %}
+          {% endif %}
         {% endif %}
         </div>
         <p>
