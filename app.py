@@ -145,6 +145,11 @@ def studytools():
         return redirect('/login')
     return render_template('studytools.html')
 
+@app.route('/addbuddyajax', methods = ['POST'])
+def addbuddyajax():
+    print(request.form)
+    return request.form
+
 @socketio.on('message', namespace = '/studytools')
 def message(msg):
     if 'userID' not in session:

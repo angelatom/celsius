@@ -10,7 +10,7 @@
       <div class="card-content">
         <span class="card-title">{{each[0][1]}}
           <div class="col s2">
-            <a class="waves-effect waves-light btn">Invite</a>
+            <a class="waves-effect waves-light btn" data-buddyID="{{each[0][0]}}">Invite</a>
           </div>
         </span>
         <div class = "col s12">
@@ -25,3 +25,7 @@
 {% endfor %}
 
 {%endblock%}
+
+{% block footer %}
+<script src="static/buddyresults.js"></script>
+{% endblock %}
