@@ -157,7 +157,18 @@ def findstudyspace():
 def studytools():
     if 'userID' not in session:
         return redirect('/login')
-    return render_template('studytools.html')
+    results = database.getBuddies(session['userID'])
+    userdata = []
+    for userID in results:
+        userdata.append(database.getUserInfo(userID[0]))
+    tags = []
+    for userID in results:
+        tags.append(database.getTags(userID[0]))
+    buddyresults = []
+    for counter in range(len(results)):
+        adder = [userdata[counter], tags[counter]]
+        buddyresults.append(adder)
+    return render_template('studytools.html', buddy = buddyresults)
 
 @app.route('/addbuddyajax', methods = ['POST'])
 def addbuddyajax():
