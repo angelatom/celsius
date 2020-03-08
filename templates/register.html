@@ -20,24 +20,24 @@
   <form id="form" class = "col s12" method="POST" action="/register">
     <div class = "row">
       <div class="input-field col s6 offset-s3">
-        <input id="displayname" type="text" class="validate" data-length="32" name="displayname">
+        <input id="displayname" type="text" class="validate" name="displayname" required>
         <label for="displayname">Display Name</label>
-        <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+        <span class="helper-text" data-error="" data-success=""></span>
       </div>
       <div class="input-field col s6 offset-s3">
-        <input id="username" type="text" class="validate" data-length="32" name="username">
+        <input id="username" type="text" class="validate" name="username" required>
         <label for="username">Username</label>
-        <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+        <span class="helper-text" data-error="" data-success=""></span>
       </div>
       <div class="input-field col s6 offset-s3">
-        <input id="password" type="password" class="validate" data-length="32" name="password">
+        <input id="password" type="password" class="validate" name="password" required>
         <label for="password">Password</label>
-        <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+        <span class="helper-text" data-error="" data-success=""></span>
       </div>
       <div class="input-field col s6 offset-s3">
-        <input id="check_password" type="password" class="validate" data-length="32">
+        <input id="check_password" type="password" class="" oninput="checkMatching(this)">
         <label for="check_password">Retype Password</label>
-        <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+        <span class="helper-text" data-error="Passwords do not match" data-success=""></span>
       </div>
       <div class = "col s6 offset-s3">
         <div class="chips chips-placeholder">

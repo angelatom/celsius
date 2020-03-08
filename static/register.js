@@ -1,3 +1,4 @@
+var formElm = document.getElementById('form');
 var chipInstance;
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -14,4 +15,21 @@ $("#form").submit( function(eventObj) {
             .appendTo(this);
     }
     return true;
+});
+
+var checkMatching = function() {
+    var checkpass = document.getElementById('check_password');
+    if (checkpass.value != document.getElementById('password').value) {
+        checkpass.classList = ['invalid'];
+        return false;
+    } else {
+        checkpass.classList = ['valid'];
+        return true;
+    }
+}
+
+formElm.addEventListener('submit', function(e) {
+    if (!checkMatching()) {
+        e.preventDefault();
+    }
 });
