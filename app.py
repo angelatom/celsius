@@ -13,7 +13,10 @@ rooms = {} # request.sid : channelID
 
 @app.route('/')
 def root():
-    return render_template("home.html")
+    if 'userID' in session:
+        return redirect('/dashboard')
+    else:
+        return render_template("home.html")
 
 @app.route("/login", methods = ['POST', 'GET'])
 def login():
@@ -63,6 +66,7 @@ def settings():
             database.changeDisplayName(session['userID'], request.form['displayname'])
         if 'password' in request.form and len(request.form['password']) != 0:
             database.changePassword(session['userID'], request.form['password'])
+        flash("Information updated")
         return render_template('settings.html')
     else:
         return render_template('settings.html')
@@ -117,9 +121,9 @@ def find_buddy_results():
 def findstudyspace():
     floor = None
     location = None
-    space = None 
+    space = None
     status = None
-    reservable = None 
+    reservable = None
     zone = None
     if request.method == "POST":
         if 'floor' in request.form and request.form['floor'] != '':
@@ -128,13 +132,13 @@ def findstudyspace():
         if 'location' in request.form and request.form['location'] != '':
             location = request.form['location']
         if 'space' in request.form and request.form['space'] != '':
-            space = request.form['space']  
+            space = request.form['space']
         if 'status' in request.form and request.form['status'] != '':
-            status = request.form['status'] 
+            status = request.form['status']
         if 'reservable' in request.form and request.form['reservable'] != '':
-            reservable = request.form['reservable'] 
+            reservable = request.form['reservable']
         if 'zone' in request.form and request.form['zone'] != '':
-            zone = request.form['zone']    
+            zone = request.form['zone']
     print(request.form)
     data = libraryspaces.querySpaceInfo(floor = floor, location = location, space_title = space, status = status, reservable = reservable, zone_description=zone)
     studyspots = libraryspaces.getstudyspots(data)
@@ -156,7 +160,7 @@ def addbuddyajax():
 @app.route('/acceptbuddyajax', methods= ['POST'])
 def acceptbuddyajax():
     database.acceptReq(request.form['buddyID'], session['userID'])
-    flash("Accepted Study Buddy Request!")
+    #flash("Accepted Study Buddy Request!")
     return redirect('/buddyinvitations')
 
 @app.route('/buddyinvitations')
@@ -196,7 +200,7 @@ def joinRoom(channelID):
     rooms[request.sid] = channelID
     users[request.sid] = session['userID']
     displayNames[session['userID']] = database.getUserInfo(session['userID'])[1]
-    
+
 
 if __name__ == '__main__':
     app.debug = True
