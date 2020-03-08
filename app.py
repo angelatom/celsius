@@ -89,12 +89,12 @@ def dashboard():
     userdata = []
     for userID in results:
         userdata.append(database.getUserInfo(userID[0]))
-    tags = []
+    tag = []
     for userID in results:
-        tags.append(database.getTags(userID[0]))
+        tag.append(database.getTags(userID[0]))
     buddyresults = []
     for counter in range(len(results)):
-        adder = [userdata[counter], tags[counter]]
+        adder = [userdata[counter], tag[counter]]
         buddyresults.append(adder)
     return render_template('dashboard.html', name = displayname, user = username, tags = tags, buddy = buddyresults)
 
