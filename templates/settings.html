@@ -1,7 +1,26 @@
 {% extends "dashboard.html" %}
 {% block content %}
 <div class="container">
-    <div class="chips"></div>
+    <form id="form" class="col s12" method="POST" action="/settings">
+        <div class="row">
+            <div class="input-field col s6 offset-s3">
+                <input id="displayname" type="text" class="validate" data-length="32" name="displayname">
+                <label for="displayname">Display Name</label>
+                <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+            </div>
+            <div class="input-field col s6 offset-s3">
+                <input id="password" type="password" class="validate" data-length="32" name="password">
+                <label for="password">Password</label>
+                <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+            </div>
+            <div class="col s6 offset-s3">
+                <div class="chips chips-placeholder">
+                    <input class="input" placeholder="Enter"> </input>
+                </div>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit">Update</button>
+    </form>
 </div>
 {% endblock %}
 {% block footer %}

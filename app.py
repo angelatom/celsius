@@ -37,20 +37,30 @@ def register():
         return render_template("register.html")
     else:
         for i in ['username', 'password', 'displayname']:
-            if i not in request.form:
+            if i not in request.form or len(request.form[i]) == 0:
                 flash('One or more fields have not been completed.')
                 return redirect('/register')
         if database.registerUser(request.form['displayname'], request.form['username'], request.form['password']):
+            if 'tags' in request.form:
+                database.updateTags(database.getID(request.form['username']), request.form.getlist('tags'))
             return redirect('/dashboard')
         else:
             flash('Username already exists!')
             return redirect('/register')
 
-@app.route('/settings')
+@app.route('/settings', methods = ['POST', 'GET'])
 def settings():
-    # if 'userID' not in session:
-    #     return redirect('/')
-    # else:
+    if 'userID' not in session:
+        return redirect('/')
+    if request.method == 'POST':
+        if 'tags' in request.form:
+            database.updateTags(session['userID'], request.form.getlist('tags'))
+        if 'displayname' in request.form and len(request.form['displayname']) != 0:
+            database.changeDisplayName(session['userID'], request.form['displayname'])
+        if 'password' in request.form and len(request.form['password']) != 0:
+            database.changePassword(session['userID'], request.form['password'])
+        return render_template('settings.html')
+    else:
         return render_template('settings.html')
 
 @app.route('/logout')

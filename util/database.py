@@ -42,6 +42,12 @@ def addToChannel(channelID, userID):
     cursor.execute("INSERT INTO channelParticipants (channelID, userID) VALUES (%s, %s)", (channelID, userID,))
     conn.commit()
 
+def getID(username):
+    cursor.execute("SELECT userID FROM userInfo WHERE username = %s LIMIT 1", (username,))
+    if cursor.rowcount == 0:
+        return None
+    return cursor.fetchone()[0]
+
 def updateTags(userID, tags):
     cursor.execute(
         '''
