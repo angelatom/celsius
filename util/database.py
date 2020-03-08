@@ -94,8 +94,9 @@ def acceptReq(senderID, receiverID):
     cursor.commit()
     return True
 
-def getBuddyReq(userID):
-    pass
+def getBuddyReq(receiverID):
+    cursor.execute("SELECT senderID FROM buddyRequests WHERE receiverID = %s", (receiverID,))
+    return cursor.fetchall()
 
 def getBuddies(userID):
     cursor.execute("SELECT buddyUser FROM buddy WHERE userID = %s", (userID,))

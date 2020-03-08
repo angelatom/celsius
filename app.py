@@ -81,7 +81,8 @@ def dashboard():
     displayname = userdata[1]
     username = userdata[2]
     tags = database.getTags(session['userID'])
-    return render_template('dashboard.html', name = displayname, user = username, tags = tags)
+    buddylist = database.getBuddies(session['userID'])
+    return render_template('dashboard.html', name = displayname, user = username, tags = tags, buddy = buddylist)
 
 @app.route('/studyspace')
 def test():
@@ -152,9 +153,33 @@ def addbuddyajax():
     flash("Invited user!")
     return redirect('/findbuddy')
 
+@app.route('/acceptbuddyajax', methods= ['POST'])
+def acceptbuddyajax():
+    database.acceptReq(request.form['buddyID'], session['userID'])
+    flash("Accepted Study Buddy Request!")
+    return redirect('/buddyinvitations')
+
 @app.route('/buddyinvitations')
 def buddyinvitations():
-    return redirect('/dashboard')
+    results = database.getBuddyReq(session['userID'])
+    print(results)
+    userdata = []
+    for userID in results:
+        userdata.append(database.getUserInfo(userID[0]))
+    tags = []
+    for userID in results:
+        tags.append(database.getTags(userID[0]))
+    buddyresults = []
+    for counter in range(len(results)):
+        adder = [userdata[counter], tags[counter]]
+        buddyresults.append(adder)
+    return render_template('invites.html', invites = buddyresults)
+
+@app.route('/buddies')
+def buddies():
+    buddylist = database.getBuddies(session['userID'])
+    return buddylist
+
 
 @socketio.on('message', namespace = '/studytools')
 def message(msg):
