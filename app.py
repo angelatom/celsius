@@ -96,7 +96,18 @@ def dashboard():
     for counter in range(len(results)):
         adder = [userdata[counter], tag[counter]]
         buddyresults.append(adder)
-    return render_template('dashboard.html', name = displayname, user = username, tags = tags, buddy = buddyresults)
+    reqresults = database.getBuddyReq(session['userID'])
+    requserdata = []
+    for userID in reqresults:
+        requserdata.append(database.getUserInfo(userID[0]))
+    reqtags = []
+    for userID in reqresults:
+        reqtags.append(database.getTags(userID[0]))
+    reqbuddyresults = []
+    for counter in range(len(reqresults)):
+        adder = [userdata[counter], tags[counter]]
+        reqbuddyresults.append(adder)
+    return render_template('dashboard.html', name = displayname, user = username, tags = tags, buddy = buddyresults, invites = reqbuddyresults)
 
 @app.route('/studyspace')
 def test():
@@ -169,6 +180,23 @@ def studytools():
         adder = [userdata[counter], tags[counter]]
         buddyresults.append(adder)
     return render_template('studytools.html', buddy = buddyresults)
+
+@app.route('/tools')
+def tools():
+    if 'userID' not in session:
+        return redirect('/login')
+    results = database.getBuddies(session['userID'])
+    userdata = []
+    for userID in results:
+        userdata.append(database.getUserInfo(userID[0]))
+    tags = []
+    for userID in results:
+        tags.append(database.getTags(userID[0]))
+    buddyresults = []
+    for counter in range(len(results)):
+        adder = [userdata[counter], tags[counter]]
+        buddyresults.append(adder)
+    return render_template('tools.html', buddy = buddyresults)
 
 @app.route('/addbuddyajax', methods = ['POST'])
 def addbuddyajax():
