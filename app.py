@@ -1,4 +1,4 @@
-import os, cgi
+import os, html
 from flask_socketio import SocketIO, join_room, leave_room, emit, send
 from flask import Flask, render_template, request, session, url_for, redirect, flash
 from util import database, libraryspaces
@@ -246,12 +246,14 @@ def message(msg):
     if 'userID' not in session:
         return
     if len(msg) != 0:
-        emit('message', f"<b>{displayNames[session['userID']]}</b>: {cgi.escape(msg)}", broadcast = True, room = rooms[request.sid])
+        emit('message', f"<b>{displayNames[session['userID']]}</b>: {html.escape(msg)}", broadcast = True, room = rooms[request.sid])
 
 @socketio.on('joinRoom', namespace = '/studytools')
 def joinRoom(channelID):
     if 'userID' not in session:
         return
+    if request.sid in rooms:
+        leave_room(rooms[request.sid])
     join_room(channelID)
     rooms[request.sid] = channelID
     users[request.sid] = session['userID']
