@@ -74,19 +74,31 @@ def logout():
 
 @app.route('/dashboard')
 def dashboard():
+    if 'userID' not in session:
+        return redirect('/')
     return render_template('dashboard.html')
 
 @app.route('/studyspace')
 def test():
+    if 'userID' not in session:
+        return redirect('/')
     return render_template('studyspace.html')
 
 @app.route('/studybuddy')
 def find_study_buddy():
+    if 'userID' not in session:
+        return redirect('/')
     return render_template('find.html')
 
 @app.route('/findbuddy', methods=['POST', 'GET'])
 def find_buddy_results():
-    return database.matchTags(session['userID'])
+    if 'userID' not in session:
+        return redirect('/')
+    results = database.matchTags(session['userID'])
+    userdata = []
+    for userID in results:
+        userdata.append(database.getUserInfo(userID[0]))
+    return render_template('buddyresults.html', results = results, userdata = userdata)
 
 @app.route('/findstudyspace', methods=['POST', 'GET'])
 def findstudyspace():

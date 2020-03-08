@@ -49,7 +49,7 @@ def getID(username):
     return cursor.fetchone()[0]
 
 def updateTags(userID, tags):
-    for i in len(tags):
+    for i in range(len(tags)):
         tags[i] = tags[i].lower()
     cursor.execute(
         '''
@@ -114,13 +114,14 @@ def authenticate(username, password):
     return cursor.fetchone()[0]
 
 def matchTags(userID):
-    tags = cursor.execute("SELECT tags FROM tags WHERE userID = %s", (userID,))
+    cursor.execute("SELECT tags FROM tags WHERE userID = %s LIMIT 1", (userID,))
+    tags = cursor.fetchone()[0]
     cursor.execute(
         '''
         WITH buddiedIDs AS (SELECT buddyUser FROM buddy WHERE userID = %s)
         SELECT userID FROM tags
         WHERE
-            userID NOT IN (buddiedIDs) AND
+            userID NOT IN (SELECT * FROM buddiedIDs) AND
             userID != %s AND
             tags && %s
         LIMIT 5
