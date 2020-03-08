@@ -1,4 +1,4 @@
-import os
+import os, cgi
 from flask_socketio import SocketIO, join_room, leave_room, emit, send
 from flask import Flask, render_template, request, session, url_for, redirect, flash
 from util import database, libraryspaces
@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(32)
 socketio = SocketIO(app)
 
+displayNames = {} # userID : displayNames
 users = {} # request.sid : userID
 rooms = {} # request.sid : channelID
 
@@ -129,17 +130,25 @@ def findstudyspace():
 
 @app.route('/studytools')
 def studytools():
+    if 'userID' not in session:
+        return redirect('/login')
     return render_template('studytools.html')
 
 @socketio.on('message', namespace = '/studytools')
 def message(msg):
+    if 'userID' not in session:
+        return
     if len(msg) != 0:
-        emit('message', msg, broadcast = True, room = rooms[request.sid])
+        emit('message', f"<b>{displayNames[session['userID']]}</b>: {cgi.escape(msg)}", broadcast = True, room = rooms[request.sid])
 
 @socketio.on('joinRoom', namespace = '/studytools')
 def joinRoom(channelID):
+    if 'userID' not in session:
+        return
     join_room(channelID)
     rooms[request.sid] = channelID
+    users[request.sid] = session['userID']
+    displayNames[session['userID']] = database.getUserInfo(session['userID'])[1]
     
 
 if __name__ == '__main__':
