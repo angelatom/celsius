@@ -1,7 +1,25 @@
 {% extends "dashboard.html" %}
 
 {% block content %}
+<br>
 
-{{results}}
+{% for each in results %}
+<div class="row">
+  <div class="col s10 offset-s1">
+    <div class="card card-bg">
+      <div class="card-content">
+        <span class="card-title">{{each[0][1]}}
+          <div class="col s2">
+            <a class="waves-effect waves-light btn">Invite</a>
+          </div>
+        </span>
+        {% for every in each[1] %}
+          <span class="new badge blue lighten-2" data-badge-caption="">{{every}}</span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
 
 {%endblock%}
