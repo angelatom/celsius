@@ -180,9 +180,18 @@ def buddyinvitations():
 
 @app.route('/buddies')
 def buddies():
-    buddylist = database.getBuddies(session['userID'])
-    return buddylist
-
+    results = database.getBuddies(session['userID'])
+    userdata = []
+    for userID in results:
+        userdata.append(database.getUserInfo(userID[0]))
+    tags = []
+    for userID in results:
+        tags.append(database.getTags(userID[0]))
+    buddyresults = []
+    for counter in range(len(results)):
+        adder = [userdata[counter], tags[counter]]
+        buddyresults.append(adder)
+    return render_template("buddies.html", buddy = buddyresults)
 
 @socketio.on('message', namespace = '/studytools')
 def message(msg):
