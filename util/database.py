@@ -102,6 +102,10 @@ def getBuddies(userID):
     cursor.execute("SELECT buddyUser FROM buddy WHERE userID = %s", (userID,))
     return cursor.fetchall()
 
+def getPendingInvites(userID):
+    cursor.execute("SELECT receiverID FROM buddyRequests WHERE senderID = %s", (userID,))
+    return cursor.fetchall()
+
 def getMessages(channelID, offset = 0):
     cursor.execute(
         '''
