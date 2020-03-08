@@ -49,6 +49,8 @@ def getID(username):
     return cursor.fetchone()[0]
 
 def updateTags(userID, tags):
+    for i in len(tags):
+        tags[i] = tags[i].lower()
     cursor.execute(
         '''
         INSERT INTO tags (userID, tags)
