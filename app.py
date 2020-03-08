@@ -92,7 +92,10 @@ def find_buddy_results():
     if 'userID' not in session:
         return redirect('/')
     results = database.matchTags(session['userID'])
-    return render_template('buddyresults.html', results = results)
+    userdata = []
+    for userID in results:
+        userdata.append(database.getUserInfo(userID[0]))
+    return render_template('buddyresults.html', results = results, userdata = userdata)
 
 @app.route('/findstudyspace', methods=['POST', 'GET'])
 def findstudyspace():
