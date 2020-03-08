@@ -39,22 +39,38 @@
 		{%block content%}
 		<div class="container">
 			<div class="row">
-				<div class="col s12">
-					<div class="col l12 m6 s12">
+
+					<div class="col s12">
 						<div class="card card-bg">
 							<div class="card-content">
-							<ul>
-								<li>{{name}}</li>
-								<li>{{user}}</li>
-								<li>{{tags}}</li>
-								{%for each in tags%}
-									<li> {{each}}</li>
-								{% endfor %}
-							</ul>
+                <div class="row">
+                  <div class = "col s6 offset-s3 center">
+                    <h1>Welcome {{name}}</h1>
+                  </div>
+                  <div class = "col s10 offset-s1">
+                    <div class="card-action"></div>
+                  </div>
+                  <div class = "col s6 offset-s1">
+                    <h4>User Information:</h4>
+                  </div>
+                  <div class = "col s8 offset-s2">
+                    <h5> Username: {{user}} </h5>
+                  </div>
+                  <div class = "col s6 offset-s1">
+                    <h4>Current Tags:</h4>
+                  </div>
+                  <div class = "col s8 offset-s2">
+    								{%for each in tags%}
+                    <div class="chip">
+                        {{each}}
+                    </div>
+    								{% endfor %}
+                  </div>
+                </div>
 							</div>
 						</div>
 					</div>
-				</div>
+
 			</div>
 		</div>
 		{%endblock%}
