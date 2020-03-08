@@ -85,8 +85,18 @@ def dashboard():
     displayname = userdata[1]
     username = userdata[2]
     tags = database.getTags(session['userID'])
-    buddylist = database.getBuddies(session['userID'])
-    return render_template('dashboard.html', name = displayname, user = username, tags = tags, buddy = buddylist)
+    results = database.getBuddies(session['userID'])
+    userdata = []
+    for userID in results:
+        userdata.append(database.getUserInfo(userID[0]))
+    tags = []
+    for userID in results:
+        tags.append(database.getTags(userID[0]))
+    buddyresults = []
+    for counter in range(len(results)):
+        adder = [userdata[counter], tags[counter]]
+        buddyresults.append(adder)
+    return render_template('dashboard.html', name = displayname, user = username, tags = tags, buddy = buddyresults)
 
 @app.route('/studyspace')
 def test():
