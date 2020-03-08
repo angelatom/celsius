@@ -148,7 +148,13 @@ def studytools():
 @app.route('/addbuddyajax', methods = ['POST'])
 def addbuddyajax():
     print(request.form)
-    return request.form
+    database.sendBuddyReq(session['userID'], request.form['buddyID'])
+    flash("Invited user!")
+    return redirect('/findbuddy')
+
+@app.route('/buddyinvitations')
+def buddyinvitations():
+    return redirect('/dashboard')
 
 @socketio.on('message', namespace = '/studytools')
 def message(msg):
