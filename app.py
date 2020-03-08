@@ -164,22 +164,22 @@ def findstudyspace():
     data = libraryspaces.querySpaceInfo(floor = floor, location = location, space_title = space, status = status, reservable = reservable, zone_description=zone)
     return render_template('studyspaceresult.html', studyspot = data[:10])
 
-@app.route('/studytools')
+@app.route('/studytools', methods = ['POST'])
 def studytools():
     if 'userID' not in session:
         return redirect('/login')
-    results = database.getBuddies(session['userID'])
-    userdata = []
-    for userID in results:
-        userdata.append(database.getUserInfo(userID[0]))
-    tags = []
-    for userID in results:
-        tags.append(database.getTags(userID[0]))
-    buddyresults = []
-    for counter in range(len(results)):
-        adder = [userdata[counter], tags[counter]]
-        buddyresults.append(adder)
-    return render_template('studytools.html', buddy = buddyresults)
+    if request.method == 'POST':
+        buddyID = -1
+        try:
+            buddyID = int(request.form['buddyID'])
+        except:
+            return redirect('/dashboard')
+        if database.getUserInfo(buddyID) == None:
+            return redirect('/dashboard')
+        channelID = database.getChannel(session['userID'], buddyID)
+        return render_template('studytools.html', channelID = channelID)
+    else:
+        return redirect('/dashboard')
 
 @app.route('/tools')
 def tools():

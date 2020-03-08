@@ -40,132 +40,140 @@
 		<div class="container">
 			<div class="row">
 
-					<div class="col s12">
-						<div class="card card-bg">
-							<div class="card-content">
-                <div class="row">
-                  <div class = "col s6 offset-s3 center">
-                    <h1>Welcome {{name}}</h1>
-                  </div>
-                  <div class = "col s10 offset-s1">
-                    <div class="card-action"></div>
-                  </div>
+				<div class="col s12">
+					<div class="card card-bg">
+						<div class="card-content">
+							<div class="row">
+								<div class="col s6 offset-s3 center">
+									<h1>Welcome {{name}}</h1>
+								</div>
+								<div class="col s10 offset-s1">
+									<div class="card-action"></div>
+								</div>
 
-                  <div class="card-tabs">
-                    <ul class="tabs tabs-fixed-width">
-                      <li class="tab"><a href="#main">Test 1</a></li>
-                      <li class="tab"><a href="#op1">Current Buddies</a></li>
-                      <li class="tab"><a href="#op2">Invites</a></li>
-                      <li class="tab col s4"><a href="#op3">Pending Invites</a></li>
-                    </ul>
-                  </div>
+								<div class="card-tabs">
+									<ul class="tabs tabs-fixed-width">
+										<li class="tab"><a href="#main">Test 1</a></li>
+										<li class="tab"><a href="#op1">Current Buddies</a></li>
+										<li class="tab"><a href="#op2">Invites</a></li>
+										<li class="tab col s4"><a href="#op3">Pending Invites</a></li>
+									</ul>
+								</div>
 
-                  <div class="card-content grey lighten-4">
-                    <div id="main" class = "row">
-                      <div class = "col left">
-                        <h4>User Information:</h4>
-                      <div class = "col s8 offset-s2">
-                        <h5> Username: {{user}} </h5>
-                      </div>
-                      <div class = "col left">
-                        <h4>Current Tags:</h4>
-                      </div>
-                      <div class = "col s8 offset-s2">
-        								{%for each in tags%}
-                        <div class="chip">
-                            {{each}}
-                        </div>
-        								{% endfor %}
-                      </div>
-                    </div>
-                  </div>
+								<div class="card-content grey lighten-4">
+									<div id="main" class="row">
+										<div class="col left">
+											<h4>User Information:</h4>
+											<div class="col s8 offset-s2">
+												<h5> Username: {{user}} </h5>
+											</div>
+											<div class="col left">
+												<h4>Current Tags:</h4>
+											</div>
+											<div class="col s8 offset-s2">
+												{%for each in tags%}
+												<div class="chip">
+													{{each}}
+												</div>
+												{% endfor %}
+											</div>
+										</div>
+									</div>
 
-                    <div id="op1">
-                      <div class="row">
-                        {% if buddy|length > 0 %}
-                        {% for each in buddy %}
-                      <div class="col s12 m6">
-                        <div class="card">
-                          <div class="card-content">
-                            <span class="card-title right">{{each[0][1]}}</span>
-                            <a class="waves-effect waves-light btn left" data-buddyID="{{each[0][0]}}">Msg</a>
-                          </div>
-                          <br>
-                          <div class="card-action">
-                            {%for every in each[1]%}
-                            <div class="chip">
-                                {{every}}
-                            </div>
-            								{% endfor %}
-                          </div>
-                        </div>
-                        </div>
-                        {% endfor %}
-                        {% else %}
-                        <h5> You don't have any right now! Go to the Find Buddies to make some</h5>
-                        {% endif %}
-                      </div>
-                    </div>
+									<div id="op1">
+										<div class="row">
+											{% if buddy|length > 0 %}
+											{% for each in buddy %}
+											<div class="col s12 m6">
+												<div class="card">
+													<div class="card-content">
+														<span class="card-title right">{{each[0][1]}}</span>
+														<form method = 'POST' action = '/studytools'>
+															<button class="waves-effect waves-light btn left" type='submit' name='buddyID' value='{{each[0][0]}}'>
+																Msg
+															</a>
+														</form>
+													</div>
+													<br>
+													<div class="card-action">
+														{%for every in each[1]%}
+														<div class="chip">
+															{{every}}
+														</div>
+														{% endfor %}
+													</div>
+												</div>
+											</div>
+											{% endfor %}
+											{% else %}
+											<h5> You don't have any right now! Go to the Find Buddies to make some</h5>
+											{% endif %}
+										</div>
+									</div>
 
-                    <div id="op2">
-                      {% if invites|length > 0 %}
-                      {% for each in invites %}
-                      <div class="row">
-                        <div class="col s10 offset-s1">
-                          <div class="card">
-                            <div class="card-content">
-                              <span class="card-title center">{{each[0][1]}}
-                                <div class="col s2">
-                                  <a class="waves-effect waves-light btn" data-buddyID="{{each[0][0]}}">Accept</a>
-                                </div>
-                              </span>
-                              <div class = "col s12">
-                              {% for every in each[1] %}
-                                <span class="new badge blue lighten-2" data-badge-caption="">{{every}}</span>
-                              {% endfor %}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      {% endfor %}
-                      {% else %}
-                      <h5> You don't have any invites right now!</h5>
-                      {% endif %}
-                    </div>
+									<div id="op2">
+										{% if invites|length > 0 %}
+										{% for each in invites %}
+										<div class="row">
+											<div class="col s10 offset-s1">
+												<div class="card">
+													<div class="card-content">
+														<span class="card-title center">{{each[0][1]}}
+															<div class="col s2">
+																<a class="waves-effect waves-light btn"
+																	data-buddyID="{{each[0][0]}}">Accept</a>
+															</div>
+														</span>
+														<div class="col s12">
+															{% for every in each[1] %}
+															<span class="new badge blue lighten-2"
+																data-badge-caption="">{{every}}</span>
+															{% endfor %}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										{% endfor %}
+										{% else %}
+										<h5> You don't have any invites right now!</h5>
+										{% endif %}
+									</div>
 
-                    <div id="op3">
-                      {% if results|length > 0 %}
-                      {% for each in results %}
-                      <div class="row">
-                        <div class="col s10 offset-s1">
-                          <div class="card">
-                            <div class="card-content">
-                              <span class="card-title">{{each[0][1]}}
-                                <div class="col s2">
-                                  <a class="waves-effect waves-light btn" data-buddyID="{{each[0][0]}}">Accept</a>
-                                </div>
-                              </span>
-                              <div class = "col s12">
-                              {% for every in each[1] %}
-                                <span class="new badge blue lighten-2" data-badge-caption="">{{every}}</span>
-                              {% endfor %}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      {% endfor %}
-                      {% else %}
-                      <h5> You don't have any sent invites right now!</h5>
-                      {% endif %}
-                    </div>
+									<div id="op3">
+										{% if results|length > 0 %}
+										{% for each in results %}
+										<div class="row">
+											<div class="col s10 offset-s1">
+												<div class="card">
+													<div class="card-content">
+														<span class="card-title">{{each[0][1]}}
+															<div class="col s2">
+																<a class="waves-effect waves-light btn"
+																	data-buddyID="{{each[0][0]}}">Accept</a>
+															</div>
+														</span>
+														<div class="col s12">
+															{% for every in each[1] %}
+															<span class="new badge blue lighten-2"
+																data-badge-caption="">{{every}}</span>
+															{% endfor %}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										{% endfor %}
+										{% else %}
+										<h5> You don't have any sent invites right now!</h5>
+										{% endif %}
+									</div>
 
-                    </div>
-                </div>
+								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 
 			</div>
 		</div>
@@ -173,11 +181,12 @@
 	</div>
 </body>
 <footer>
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"> </script>
-  <script src="static/inviteresults.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"> </script>
+	<script src="static/inviteresults.js"></script>
 	{% block footer %}
 	{% endblock %}
 </footer>

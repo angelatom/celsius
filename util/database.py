@@ -30,9 +30,10 @@ def createChannel(participants):
         return False
     cursor.execute("INSERT INTO channels DEFAULT VALUES RETURNING channelID")
     channelID = cursor.fetchone()[0]
-    argstr = ','.join(cursor.mogrify("(%s, %s)", (channelID, x,)) for x in participants)
-    cursor.execute("INSERT INTO channelParticipants (channelID, userID) VALUES " + argstr)
+    argstr = b','.join([cursor.mogrify("(%s, %s)", (channelID, x,)) for x in participants])
+    cursor.execute(b"INSERT INTO channelParticipants (channelID, userID) VALUES " + argstr)
     conn.commit()
+    return channelID
 
 def leaveChannel(channelID, userID):
     cursor.execute("DELETE FROM channelParticipants WHERE channelID = %s AND userID = %s", (channelID, userID,))
@@ -106,6 +107,21 @@ def getPendingInvites(userID):
     cursor.execute("SELECT receiverID FROM buddyRequests WHERE senderID = %s", (userID,))
     return cursor.fetchall()
 
+def getChannel(userID, otherUser):
+    query = '''
+        WITH channelsIn AS (SELECT channelID FROM channelParticipants WHERE userID = %s)
+        SELECT channelID FROM channelParticipants
+        WHERE
+            channelParticipants.userID = %s AND
+            channelParticipants.channelID IN (SELECT * FROM channelsIn)
+        LIMIT 1
+    '''
+    cursor.execute(query ,(userID, otherUser,))
+    if cursor.rowcount == 0:
+        createChannel([userID, otherUser])
+        cursor.execute(query ,(userID, otherUser,))
+    return cursor.fetchone()[0]
+
 def getMessages(channelID, offset = 0):
     cursor.execute(
         '''
@@ -121,6 +137,8 @@ def getMessages(channelID, offset = 0):
 
 def getUserInfo(userID):
     cursor.execute("SELECT * FROM userInfo WHERE userID = %s LIMIT 1", (userID,))
+    if cursor.rowcount == 0:
+        return None
     return cursor.fetchone()
 
 def authenticate(username, password):
