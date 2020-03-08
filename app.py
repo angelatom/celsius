@@ -152,16 +152,15 @@ def studytools():
 
 @app.route('/addbuddyajax', methods = ['POST'])
 def addbuddyajax():
-    print(request.form)
+    # print(request.form)
     database.sendBuddyReq(session['userID'], request.form['buddyID'])
-    flash("Invited user!")
-    return redirect('/findbuddy')
+    return {'success' : True}
 
 @app.route('/acceptbuddyajax', methods= ['POST'])
 def acceptbuddyajax():
-    database.acceptReq(request.form['buddyID'], session['userID'])
+    return {'success' : database.acceptReq(request.form['buddyID'], session['userID'])}
     #flash("Accepted Study Buddy Request!")
-    return redirect('/buddyinvitations')
+    # return redirect('/buddyinvitations')
 
 @app.route('/buddyinvitations')
 def buddyinvitations():
