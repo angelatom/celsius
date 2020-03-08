@@ -22,8 +22,12 @@ def changePassword(userID, newPassword):
     conn.commit()
 
 def sendMessage(channelID, authorID, content):
-    conn.execute("INSERT INTO messages (channelID, author, content) VALUES (%s, %s, %s)", (channelID, authorID, content,))
+    cursor.execute("INSERT INTO messages (channelID, author, content) VALUES (%s, %s, %s)", (channelID, authorID, content,))
     conn.commit()
+
+def inChannel(channelID, userID):
+    cursor.execute("SELECT 1 FROM channelParticipants WHERE channelID = %s AND userID = %s LIMIT 1", (channelID, userID,))
+    return cursor.rowcount == 1
 
 def createChannel(participants):
     if len(participants) == 0:
@@ -125,9 +129,9 @@ def getChannel(userID, otherUser):
 def getMessages(channelID, offset = 0):
     cursor.execute(
         '''
-        SELECT * FROM messages
+        SELECT author, content FROM messages
         WHERE channelID = %s
-        ORDER BY timeAdded DESC
+        ORDER BY timestamp DESC
         LIMIT 100
         OFFSET %s
         ''',

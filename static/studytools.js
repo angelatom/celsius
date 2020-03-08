@@ -9,6 +9,17 @@ socket.on('connect', function () {
     socket.emit('joinRoom', channelID);
 });
 
+socket.on('joinedRoom', function (data) {
+    var chatBox = document.getElementById('chatBox');
+    var newMsg = document.createElement('li');
+    for (var i = data.length - 1; i >= 0; i--) {
+        newMsg.classList.add('collection-item');
+        newMsg.innerHTML = data[i];
+        chatBox.appendChild(newMsg);
+    }
+    chatBox.scrollTop = chatBox.scrollHeight;
+});
+
 socket.on('message', function (msg) {
     var chatBox = document.getElementById('chatBox');
     var newMsg = document.createElement('li');

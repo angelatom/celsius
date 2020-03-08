@@ -259,11 +259,14 @@ def message(msg):
     if 'userID' not in session:
         return
     if len(msg) != 0:
+        database.sendMessage(rooms[request.sid], session['userID'], html.escape(msg))
         emit('message', f"<b>{displayNames[session['userID']]}</b>: {html.escape(msg)}", broadcast = True, room = rooms[request.sid])
 
 @socketio.on('joinRoom', namespace = '/studytools')
 def joinRoom(channelID):
     if 'userID' not in session:
+        return
+    if not database.inChannel(channelID, session['userID']):
         return
     if request.sid in rooms:
         leave_room(rooms[request.sid])
@@ -271,6 +274,16 @@ def joinRoom(channelID):
     rooms[request.sid] = channelID
     users[request.sid] = session['userID']
     displayNames[session['userID']] = database.getUserInfo(session['userID'])[1]
+    msgs = database.getMessages(rooms[request.sid])
+    for i in range(len(msgs)):
+        curr = msgs[i]
+        displayName = ""
+        if curr[0] in displayNames:
+            displayName = displayNames[curr[0]]
+        else:
+            displayNames[curr[0]] = database.getUserInfo(curr[0])[1]
+        msgs[i] = f"<b>{displayName}</b>: {curr[1]}"
+    emit('joinedRoom', msgs)
 
 
 if __name__ == '__main__':
