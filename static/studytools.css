@@ -1,0 +1,10 @@
+#chatBox {
+    height: 300px;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatBox > :first-child {
+    margin-top: auto;
+}
