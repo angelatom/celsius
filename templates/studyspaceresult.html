@@ -1,19 +1,38 @@
 {% extends "dashboard.html" %}
 {%block title%}
-    
+
 {%endblock%}
 {% block content %}
-    <ul>
-    {% for each in studyspot %}  
-        <li>{{each['space_title']}}</li>
-        <li>{{each['capacity']}}</li>
-        <li>{{each['reservable']}}</li>
-        <li>{{each['zone']}}</li>
-        <li>{{each['room_number']}}</li>
-        <li>{{each['status']}}</li>
-        <li>{{each['floor']}}</li>
-        <li>{{each['location']}}</li>
-        <li>{{each['zone_description']}}</li>
-    {% endfor %}  
-    </ul>
+<div class="row">
+  {% for each in studyspot %}
+  <div class="col s6 offset-s3">
+    <div class="card blue-grey darken-1">
+      <div class="card-content white-text">
+        <span class="card-title">{{each['space_title']}}</span>
+        <div class = "col s12">
+        <span class="new badge" data-badge-caption=""> {{each['status']}} </span>
+        {% if each['location'] != None %}
+          <span class="new badge" data-badge-caption=""> {{each['location']}} </span>
+        {% else %}
+        {% endif %}
+        {% if each['zone'] == "Green" %}
+        <span class="new badge green darken-3" data-badge-caption=""> {{each['zone_description']}} </span>
+        {% else %}
+        <span class="new badge light-blue darken-2" data-badge-caption=""> {{each['zone_description']}} </span>
+        {% endif %}
+        </div>
+        <p>
+          {% if each['room_number'] != None %}
+            Room: {{each['room_number']}} <br>
+          {% else %}
+          {% endif %}
+          Floor: {{each['floor']}} <br>
+          Capacity: {{each['capacity']}} <br>
+          Reservable? : {{each['reservable']}} <br>
+        </p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
