@@ -105,7 +105,7 @@ def dashboard():
         reqtags.append(database.getTags(userID[0]))
     reqbuddyresults = []
     for counter in range(len(reqresults)):
-        adder = [userdata[counter], tags[counter]]
+        adder = [requserdata[counter], tags[counter]]
         reqbuddyresults.append(adder)
     return render_template('dashboard.html', name = displayname, user = username, tags = tags, buddy = buddyresults, invites = reqbuddyresults)
 
