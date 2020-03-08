@@ -77,7 +77,11 @@ def logout():
 def dashboard():
     if 'userID' not in session:
         return redirect('/')
-    return render_template('dashboard.html')
+    userdata = database.getUserInfo(session['userID'])
+    displayname = userdata[1]
+    username = userdata[2]
+    tags = database.getTags(session['userID'])
+    return render_template('dashboard.html', name = displayname, user = username, tags = tags)
 
 @app.route('/studyspace')
 def test():

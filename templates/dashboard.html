@@ -33,7 +33,7 @@
 		<li><a href="/studybuddy"><i class="material-icons">people</i>Study Buddies</a></li>
 		<li><a href="/studyspace"><i class="material-icons">work</i>Study Space</a></li>
 		<li><a href="/studytools"><i class="material-icons">build</i>Study Tools</a></li>
-		<li><a href="/settings"><i class="material-icons">home</i>Settings</a></li>
+		<li><a href="/settings"><i class="material-icons">settings</i>Settings</a></li>
 	</ul>
 	<div class="content bg">
 		{%block content%}
@@ -43,7 +43,14 @@
 					<div class="col l12 m6 s12">
 						<div class="card card-bg">
 							<div class="card-content">
-								<canvas id="myChart"></canvas>
+							<ul>
+								<li>{{name}}</li>
+								<li>{{user}}</li>
+								<li>{{tags}}</li>
+								{%for each in tags%}
+									<li> {{each}}</li>
+								{% endfor %}
+							</ul>
 							</div>
 						</div>
 					</div>
