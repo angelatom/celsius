@@ -91,7 +91,7 @@ def acceptReq(senderID, receiverID):
     if cursor.rowcount != 1:
         return False
     cursor.execute("INSERT INTO buddy (userID, buddyUser) VALUES (%s, %s), (%s, %s)", (senderID, receiverID, receiverID, senderID))
-    cursor.commit()
+    conn.commit()
     return True
 
 def getBuddyReq(receiverID):
