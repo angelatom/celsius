@@ -151,8 +151,7 @@ def findstudyspace():
             zone = request.form['zone']
     print(request.form)
     data = libraryspaces.querySpaceInfo(floor = floor, location = location, space_title = space, status = status, reservable = reservable, zone_description=zone)
-    studyspots = libraryspaces.getstudyspots(data)
-    return render_template('studyspaceresult.html', studyspot = studyspots)
+    return render_template('studyspaceresult.html', studyspot = data[:10])
 
 @app.route('/studytools')
 def studytools():
