@@ -105,9 +105,22 @@ def dashboard():
         reqtags.append(database.getTags(userID[0]))
     reqbuddyresults = []
     for counter in range(len(reqresults)):
-        adder = [requserdata[counter], tags[counter]]
+        adder = [requserdata[counter], reqtags[counter]]
         reqbuddyresults.append(adder)
-    return render_template('dashboard.html', name = displayname, user = username, tags = tags, buddy = buddyresults, invites = reqbuddyresults)
+    #pending reqs
+    rbud = database.getPendingInvites(session['userID'])
+    ruserdata = []
+    for userID in rbud:
+        ruserdata.append(database.getUserInfo(userID[0]))
+    rtags = []
+    for userID in rbud:
+        rtags.append(database.getTags(userID[0]))
+    rresults = []
+    for counter in range(len(rbud)):
+        adder = [ruserdata[counter], rtags[counter]]
+        rresults.append(adder)
+    
+    return render_template('dashboard.html', name = displayname, user = username, tags = tags, buddy = buddyresults, invites = reqbuddyresults, results = rresults)
 
 @app.route('/studyspace')
 def test():
