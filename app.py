@@ -7,6 +7,9 @@ app = Flask(__name__)
 app.secret_key = os.urandom(32)
 socketio = SocketIO(app)
 
+users = {} # request.sid : userID
+rooms = {} # request.sid : channelID
+
 @app.route('/')
 def root():
     return render_template("home.html")
@@ -112,11 +115,20 @@ def findstudyspace():
     studyspots = libraryspaces.getstudyspots(data)
     return render_template('studyspaceresult.html', studyspot = studyspots)
 
-@socketio.on('message')
+@app.route('/studytools')
+def studytools():
+    return render_template('studytools.html')
+
+@socketio.on('message', namespace = '/studytools')
 def message(msg):
     if len(msg) != 0:
-        send(msg)
+        emit('message', msg, broadcast = True, room = rooms[request.sid])
 
+@socketio.on('joinRoom', namespace = '/studytools')
+def joinRoom(channelID):
+    join_room(channelID)
+    rooms[request.sid] = channelID
+    
 
 if __name__ == '__main__':
     app.debug = True

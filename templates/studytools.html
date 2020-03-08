@@ -1,38 +1,39 @@
 {% extends "dashboard.html" %}
 {%block title%}
 {%endblock%}
+{% block head %}
+<link rel="stylesheet" href="static/studytools.css">
+{% endblock %}
 {% block content %}
-    <canvas id="whiteboard">
+<div class="container">
+  <canvas id="whiteboard">
 
-    </canvas>
+  </canvas>
 
-    <div class="col-sm-12 col-md-4" style="word-wrap: break-word;">
-      <h5 style="text-align:center">Chat</h5>
-      <ul style="list-style: none; padding-left: 0;" id="chatlog">
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-        <li>&nbsp;</li>
-      </ul>
-      <input class="form-control" type="text" id="msgtosend"></input>
-    </div>
+  <div class="col-sm-12 col-md-4" style="word-wrap: break-word;">
+    <ul id="chatBox" class="collection">
+      <li class="collection-item">test1</li>
+      <li class="collection-item">test2</li>
+      <li class="collection-item">test3</li>
+      <li class="collection-item">test4</li>
+      <li class="collection-item">test1</li>
+      <li class="collection-item">test2</li>
+      <li class="collection-item">test3</li>
+      <li class="collection-item">test4</li>
+      <li class="collection-item">test1</li>
+      <li class="collection-item">test2</li>
+      <li class="collection-item">test3</li>
+      <li class="collection-item">test4</li>
+    </ul>
+    <input class="form-control" type="text" id="msgtosend"></input>
+  </div>
+</div>
 
 
 
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+<script src="static/studytools.js"></script>
 {% endblock %}
