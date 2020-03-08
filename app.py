@@ -73,10 +73,17 @@ def logout():
 def dashboard():
     return render_template('dashboard.html')
 
-@app.route('/test')
+@app.route('/studyspace')
 def test():
     return render_template('studyspace.html')
 
+@app.route('/studybuddy')
+def find_study_buddy():
+    return render_template('find.html')
+
+@app.route('/findbuddy', methods=['POST', 'GET'])
+def find_buddy_results():
+    return database.matchTags(session['userID'])
 
 @app.route('/findstudyspace', methods=['POST', 'GET'])
 def findstudyspace():
