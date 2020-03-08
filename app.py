@@ -175,7 +175,11 @@ def findstudyspace():
             zone = request.form['zone']
     print(request.form)
     data = libraryspaces.querySpaceInfo(floor = floor, location = location, space_title = space, status = status, reservable = reservable, zone_description=zone)
-    return render_template('studyspaceresult.html', studyspot = data[:10])
+    if (floor == None and location == None and space == None and status == None and reservable == None and zone == None):
+        ret = data[1:11]
+    else:
+        ret = data[1:10]
+    return render_template('studyspaceresult.html', studyspot = ret)
 
 @app.route('/studytools')
 def studytools():
