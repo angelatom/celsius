@@ -98,7 +98,10 @@ def find_buddy_results():
     userdata = []
     for userID in results:
         userdata.append(database.getUserInfo(userID[0]))
-    return render_template('buddyresults.html', results = results, userdata = userdata)
+    tags = []
+    for userID in results:
+        tags.append(database.getTags(userID[0]))
+    return render_template('buddyresults.html', results = results, userdata = userdata, tags = tags)
 
 @app.route('/findstudyspace', methods=['POST', 'GET'])
 def findstudyspace():
