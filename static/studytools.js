@@ -4,8 +4,6 @@ var whiteboard = document.getElementById('whiteboard');
 var chatBox = document.getElementById('chatBox');
 var msgtosend = document.getElementById('msgtosend');
 
-var channelID = 1;
-
 socket.on('connect', function () {
     console.log("The bluetoos device has been connecte-uh successfullay!");
     socket.emit('joinRoom', channelID);

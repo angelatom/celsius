@@ -22,5 +22,8 @@
 
 {% block footer %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+<script>
+  var channelID = {{channelID}};
+</script>
 <script src="static/studytools.js"></script>
 {% endblock %}
