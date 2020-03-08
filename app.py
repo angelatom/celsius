@@ -105,6 +105,12 @@ def findstudyspace():
     studyspots = libraryspaces.getstudyspots(data)
     return render_template('studyspaceresult.html', studyspot = studyspots)
 
+@socketio.on('message')
+def message(msg):
+    if len(msg) != 0:
+        send(msg)
+
+
 if __name__ == '__main__':
     app.debug = True
     socketio.run(app)
