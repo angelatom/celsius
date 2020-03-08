@@ -6,7 +6,7 @@ url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
 '''
 def getSpaceInfo():
     url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
-    headers = {'Authorization': 'Bearer 1933d3de-38d8-35ba-8880-f77c65b95b1b'}
+    headers = {'Authorization': 'Bearer 52779c68-ff67-3f1f-b86c-941f33a74370'}
     parameters = {}
     req = requests.get(url, headers=headers, params=parameters)
     data = json.loads(req.text)
@@ -16,7 +16,7 @@ print(getSpaceInfo())
 '''
 def querySpaceInfo(floor = None, location = None, space_title = None, status = None, reservable = None, zone_description= None):
     url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
-    headers = {'Authorization': 'Bearer 1933d3de-38d8-35ba-8880-f77c65b95b1b'}
+    headers = {'Authorization': 'Bearer 52779c68-ff67-3f1f-b86c-941f33a74370'}
     parameters = {}
     if (floor != None):
         parameters['floor'] = floor
