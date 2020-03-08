@@ -48,6 +48,13 @@ def getID(username):
         return None
     return cursor.fetchone()[0]
 
+def getTags(userID):
+    cursor.execute("SELECT tags FROM tags WHERE userID = %s LIMIT 1", (userID,))
+    if cursor.rowcount == 0:
+        return None
+    return cursor.fetchone()[0]
+
+
 def updateTags(userID, tags):
     for i in range(len(tags)):
         tags[i] = tags[i].lower()
@@ -61,6 +68,7 @@ def updateTags(userID, tags):
         (userID, tags, tags,)
     )
     conn.commit()
+
 
 def sendBuddyReq(senderID, receiverID):
     cursor.execute("SELECT 1 FROM buddyRequests WHERE senderID = %s AND receiverID = %s LIMIT 1", (receiverID, senderID,))
