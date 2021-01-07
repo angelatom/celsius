@@ -1,7 +1,7 @@
 import os, html
 from flask_socketio import SocketIO, join_room, leave_room, emit, send
 from flask import Flask, render_template, request, session, url_for, redirect, flash
-from util import database, libraryspaces
+from util import database
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -48,8 +48,10 @@ def register():
                 flash('One or more fields have not been completed.')
                 return redirect('/register')
         if database.registerUser(request.form['displayname'], request.form['username'], request.form['password']):
+            tags = []
             if 'tags' in request.form:
-                database.updateTags(database.getID(request.form['username']), request.form.getlist('tags'))
+                tags = request.form.getlist('tags')
+            database.updateTags(database.getID(request.form['username']), tags)
             return redirect('/dashboard')
         else:
             flash('Username already exists!')
@@ -174,11 +176,16 @@ def findstudyspace():
         if 'zone' in request.form and request.form['zone'] != '':
             zone = request.form['zone']
     print(request.form)
+    '''
     data = libraryspaces.querySpaceInfo(floor = floor, location = location, space_title = space, status = status, reservable = reservable, zone_description=zone)
     if (floor == None and location == None and space == None and status == None and reservable == None and zone == None):
         ret = data[1:11]
     else:
         ret = data[1:10]
+	
+    = [{'space_title':'bob','status':'blah','location':'lib','zone':'Blue','zone_description':'bob','room_number':'1','floor':'5','capacity':'sad','reservable':'yes'}]
+    '''
+    ret = []
     return render_template('studyspaceresult.html', studyspot = ret)
 
 @app.route('/studytools', methods = ['POST'])

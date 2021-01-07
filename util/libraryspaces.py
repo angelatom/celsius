@@ -1,10 +1,9 @@
 import json
 import requests
 
-key = "52779c68-ff67-3f1f-b86c-941f33a74370"
+key = ""
 url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
-'''
-def getSpaceInfo():
+'''def getSpaceInfo():
     url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
     headers = {'Authorization': f'Bearer {key}'}
     parameters = {}
@@ -12,8 +11,7 @@ def getSpaceInfo():
     data = json.loads(req.text)
     return data
 
-print(getSpaceInfo())
-'''
+print(getSpaceInfo()'''
 def querySpaceInfo(floor = None, location = None, space_title = None, status = None, reservable = None, zone_description= None):
     url = 'https://sandbox.api.it.nyu.edu/library-share-space-exp/spaces'
     headers = {'Authorization': f'Bearer {key}'}
